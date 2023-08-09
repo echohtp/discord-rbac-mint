@@ -139,7 +139,7 @@ export default function KeyMintPage() {
             </p>
 
             {/* Loading Spinner */}
-            {loading &&
+            {wallet.connected && loading &&
               <>
                 <span className="mt-4 loading loading-ring loading-lg text-white"></span>
               </>
