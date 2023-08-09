@@ -1,13 +1,11 @@
 import Head from 'next/head'
-import { WalletMultiButton, useWalletModal } from '@solana/wallet-adapter-react-ui'
+import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { WalletContextState, useWallet } from '@solana/wallet-adapter-react'
-import { NFTStorage } from 'nft.storage'
 import { toast } from 'react-toastify'
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import { Button } from 'antd'
-import { Triangle } from 'react-loader-spinner'
+
 
 const HOST = process.env.NEXT_PUBLIC_HOST
 
