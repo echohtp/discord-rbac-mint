@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import { Button } from 'antd'
 
-const HOST = process.env.HOST
+const HOST = process.env.NEXT_PUBLIC_HOST
 
 export default function KeyMintPage() {
 
