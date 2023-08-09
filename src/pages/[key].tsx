@@ -154,8 +154,8 @@ export default function KeyMintPage() {
             }
 
             {/* BUTTONS GO HERE */}
-            {!user.error && <>
-              {!loading && (user.solanaPublicKey == wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
+            {!loading && !user.error && <>
+              {(user.solanaPublicKey == wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
                 <button className="btn btn-outline btn-info"
                   onClick={() => {
                     mintAction(wallet, user)
@@ -165,12 +165,12 @@ export default function KeyMintPage() {
                   Mint Now</button>
               }
 
-              {wallet.connected && !loading && (user.solanaPublicKey != wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
+              {wallet.connected && (user.solanaPublicKey != wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
                 <button className="btn btn-outline btn-info">Wrong Wallet</button>
               }
 
 
-              {!loading && (user.solanaPublicKey == wallet.publicKey?.toBase58() && user.membershipNFTPublicKey) &&
+              {(user.solanaPublicKey == wallet.publicKey?.toBase58() && user.membershipNFTPublicKey) &&
                 <button className="btn btn-outline btn-info"
                   onClick={() => {
 
