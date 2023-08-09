@@ -165,7 +165,7 @@ export default function KeyMintPage() {
                 Mint Now</button>
             }
 
-            {!loading && (user.solanaPublicKey != wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
+            {wallet.connected && !loading && (user.solanaPublicKey != wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
               <button className="btn btn-outline btn-info">Wrong Wallet</button>
             }
 
@@ -173,7 +173,7 @@ export default function KeyMintPage() {
             {!loading && (user.solanaPublicKey == wallet.publicKey?.toBase58() && user.membershipNFTPublicKey) &&
               <button className="btn btn-outline btn-info"
                 onClick={() => {
-                  mintAction(wallet, user)
+                  
                 }}
               >Minted</button>
             }
