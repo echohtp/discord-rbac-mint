@@ -3,7 +3,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import User from '../../../lib/models/userModel';
 
-
 type Data = {
   
 }

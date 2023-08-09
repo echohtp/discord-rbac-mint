@@ -1,5 +1,6 @@
 // lib/database.js
 import { Sequelize } from 'sequelize'
+require('pg')
 
 const initializeDatabase = () => {
 
