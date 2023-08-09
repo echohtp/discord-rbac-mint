@@ -154,29 +154,30 @@ export default function KeyMintPage() {
             }
 
             {/* BUTTONS GO HERE */}
+            {!user.error && <>
+              {!loading && (user.solanaPublicKey == wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
+                <button className="btn btn-outline btn-info"
+                  onClick={() => {
+                    mintAction(wallet, user)
+                  }}
+                >
+                  {minting && <span className="loading loading-spinner"></span>}
+                  Mint Now</button>
+              }
 
-            {!loading && !user.error && (user.solanaPublicKey == wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
-              <button className="btn btn-outline btn-info"
-                onClick={() => {
-                  mintAction(wallet, user)
-                }}
-              >
-                {minting && <span className="loading loading-spinner"></span>}
-                Mint Now</button>
-            }
-
-            {wallet.connected && !loading && !user.error && (user.solanaPublicKey != wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
-              <button className="btn btn-outline btn-info">Wrong Wallet</button>
-            }
+              {wallet.connected && !loading && (user.solanaPublicKey != wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
+                <button className="btn btn-outline btn-info">Wrong Wallet</button>
+              }
 
 
-            {!loading && !user.error &&  (user.solanaPublicKey == wallet.publicKey?.toBase58() && user.membershipNFTPublicKey) &&
-              <button className="btn btn-outline btn-info"
-                onClick={() => {
-                  
-                }}
-              >Minted</button>
-            }
+              {!loading && (user.solanaPublicKey == wallet.publicKey?.toBase58() && user.membershipNFTPublicKey) &&
+                <button className="btn btn-outline btn-info"
+                  onClick={() => {
+
+                  }}
+                >Minted</button>
+              }
+            </>}
 
             {/* NO MORE BUTTONS */}
 
