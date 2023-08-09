@@ -40,7 +40,7 @@ export default function KeyMintPage() {
 
   async function mintAction(wallet: WalletContextState, user: any) {
 
-    if (!wallet.connected || !wallet.publicKey || user.membershipNFTPublicKey)
+    if (!wallet.connected || !wallet.publicKey || user.membershipNFTPublicKey || !user)
       return
 
     setMinting(true)
