@@ -3,6 +3,7 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 const sequelize = new Sequelize(process.env.DB!, {
         dialect: "postgres",
+        dialectModule: require('pg'),
         dialectOptions: {
             ssl: {
                 require: true,
