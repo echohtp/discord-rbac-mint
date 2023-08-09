@@ -57,9 +57,12 @@ export default async function handler(
 
     }
 
+    if (user == undefined || user == null) return res.status(200).json({done: "done"})
+
     try{
       //@ts-ignore
       user.membershipNFTPublicKey = body.nftMint
+      //@ts-ignore
       user.nftId = body.nftId
       //@ts-ignore
       await user.save()
