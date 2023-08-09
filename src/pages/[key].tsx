@@ -8,6 +8,8 @@ import axios from 'axios'
 
 
 const HOST = process.env.NEXT_PUBLIC_HOST
+const SERVER_NAME = process.env.NEXT_PUBLIC_SERVER_NAME
+const SERVER_IMAGE = process.env.NEXT_PUBLIC_SERVER_IMAGE
 
 export default function KeyMintPage() {
 
@@ -23,7 +25,7 @@ export default function KeyMintPage() {
   useEffect(() => {
     if (router.isReady) {
       setRegKey(String(router.query.key))
-      fetch(`https://${HOST}/api/key/${router.query.key}`)
+      fetch(`https://${HOST}/api/key/${key}`)
         .then((data) => data.json())
         .then((data) => {
           console.log(`Data is`)
@@ -37,8 +39,6 @@ export default function KeyMintPage() {
 
   const wallet = useWallet()
 
-
-
   async function mintAction(wallet: WalletContextState, user: any) {
 
     if (!wallet.connected || !wallet.publicKey || user.membershipNFTPublicKey || !user)
@@ -51,15 +51,14 @@ export default function KeyMintPage() {
       }
 
       // Supply Image
-      const cid = "bafybeigy65aewj3nxon4xpa7vfysvsqxmp6g5wm5s3dgx2o6pwhr6rgcgu"
+      
       // console.log(cid)
 
       const nftdata = {
-        name: `Membership Pass: ${user.username}`,
-        description: "Description goes here",
+        name: `${SERVER_NAME}: ${user.username}`,
+        description: "",
         symbol: "AXT",
-        // image: `https://ipfs.io/ipfs/${cid}`,
-        image: "https://image.lexica.art/full_jpg/706a2f1d-8700-4681-a9bd-c8a0fe279014",
+        image: SERVER_IMAGE,
         receiverAddress: wallet.publicKey.toBase58()
       }
 
@@ -69,10 +68,7 @@ export default function KeyMintPage() {
       // successful
       if ([200, 202].includes(createNftResponse.status)) {
 
-
         const retData = createNftResponse.data
-
-        console.log(retData)
         let nftData
         let loop = true
         while (loop) {
