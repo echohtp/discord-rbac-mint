@@ -33,7 +33,7 @@ export default function KeyMintPage() {
           setUser(data);
         })
         .then(() => setLoading(false))
-        .catch((e: any) => { console.log(e) })
+        .catch((e: any) => { console.log(e); setUser(undefined) })
     }
   }, [router])
 
@@ -143,6 +143,14 @@ export default function KeyMintPage() {
               <>
                 <span className="mt-4 loading loading-ring loading-lg text-white"></span>
               </>
+            }
+
+            {!loading && !user && 
+            <>
+              <p className="mt-6 text-lg leading-8 text-gray-300">
+              Invalid Key
+            </p>
+            </>
             }
 
             {/* BUTTONS GO HERE */}
