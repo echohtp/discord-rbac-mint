@@ -164,9 +164,7 @@ export default function KeyMintPage() {
             }
 
 {!loading && (user.solanaPublicKey != wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
-              <button className="btn btn-outline btn-info"
-                disabled
-              >Wrong Wallet</button>
+              <button className="btn btn-outline btn-info">Wrong Wallet</button>
             }
 
 
