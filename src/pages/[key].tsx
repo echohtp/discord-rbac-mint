@@ -58,7 +58,8 @@ export default function KeyMintPage() {
         name: `Membership Pass: ${user.username}`,
         description: "Description goes here",
         symbol: "AXT",
-        image: `https://ipfs.io/ipfs/${cid}`,
+        // image: `https://ipfs.io/ipfs/${cid}`,
+        image: "https://image.lexica.art/full_jpg/706a2f1d-8700-4681-a9bd-c8a0fe279014",
         receiverAddress: wallet.publicKey.toBase58()
       }
 
