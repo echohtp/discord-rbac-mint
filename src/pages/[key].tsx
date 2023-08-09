@@ -8,6 +8,8 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import { Button } from 'antd'
 
+const HOST = process.env.HOST
+
 export default function KeyMintPage() {
 
   const router = useRouter()
@@ -21,8 +23,7 @@ export default function KeyMintPage() {
   useEffect(() => {
     if (router.isReady) {
       setRegKey(String(router.query.key))
-      console.log(`http://localhost:3000/api/key/${router.query.key}`)
-      fetch(`http://localhost:3000/api/key/${router.query.key}`)
+      fetch(`https://${HOST}/api/key/${router.query.key}`)
         .then((data) => data.json())
         .then((data) => {
           console.log(`Data is`)
@@ -87,7 +88,7 @@ export default function KeyMintPage() {
         let _user = user
         _user.membershipNFTPublicKey = nftData.data.mintAddress
         setUser(_user)
-        axios.post(`http://localhost:3000/api/key/${regKey}`, { nftMint: nftData.data.mintAddress!, id: user.id, nftId: retData.nftId })
+        axios.post(`https://${HOST}/api/key/${regKey}`, { nftMint: nftData.data.mintAddress!, id: user.id, nftId: retData.nftId })
         setMinting(false)
 
       }
@@ -120,7 +121,6 @@ export default function KeyMintPage() {
     <div className="absolute inset-0">
       <div className='text-center mt-4'>
         <WalletMultiButton />
-        {!user && <><p>Bad key</p></>}
         {wallet.connected && !loading && user.solanaPublicKey &&
           <>
             <div className='justify-center items-center text-center px-4 mx-auto pt-10'>
