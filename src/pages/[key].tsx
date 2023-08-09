@@ -145,12 +145,12 @@ export default function KeyMintPage() {
               </>
             }
 
-            {!loading && user.error && 
-            <>
-              <p className="mt-6 text-lg leading-8 text-gray-300">
-              Invalid Key
-            </p>
-            </>
+            {!loading && user.error &&
+              <>
+                <p className="mt-6 text-lg leading-8 text-gray-300">
+                  Invalid Key
+                </p>
+              </>
             }
 
             {/* BUTTONS GO HERE */}
@@ -160,10 +160,12 @@ export default function KeyMintPage() {
                 onClick={() => {
                   mintAction(wallet, user)
                 }}
-              >Mint Now</button>
+              >
+                {minting && <span className="loading loading-spinner"></span>}
+                Mint Now</button>
             }
 
-{!loading && (user.solanaPublicKey != wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
+            {!loading && (user.solanaPublicKey != wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
               <button className="btn btn-outline btn-info">Wrong Wallet</button>
             }
 
