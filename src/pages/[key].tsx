@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import { WalletMultiButton, useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { WalletContextState, useWallet } from '@solana/wallet-adapter-react'
 import { NFTStorage } from 'nft.storage'
 import { toast } from 'react-toastify'
@@ -7,6 +7,7 @@ import { Fragment, useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { Button } from 'antd'
+import { Triangle } from 'react-loader-spinner'
 
 const HOST = process.env.NEXT_PUBLIC_HOST
 
@@ -19,6 +20,7 @@ export default function KeyMintPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [minting, setMinting] = useState<boolean>(false)
 
+  const { setVisible } = useWalletModal();
 
   useEffect(() => {
     if (router.isReady) {
@@ -31,7 +33,7 @@ export default function KeyMintPage() {
           setUser(data);
         })
         .then(() => setLoading(false))
-        .catch((e:any) => {console.log(e)})
+        .catch((e: any) => { console.log(e) })
     }
   }, [router])
 
@@ -109,6 +111,7 @@ export default function KeyMintPage() {
   }
 
 
+  const style = { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
 
   return (<>
     <Head>
@@ -118,42 +121,53 @@ export default function KeyMintPage() {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     {/* <!-- this will use the whole viewport even in mobile --> */}
-    <div className="absolute inset-0">
+    <div className="absolute inset-0 bg-gray-900">
       <div className='text-center mt-4'>
-        <WalletMultiButton />
-        {wallet.connected && !loading && user.solanaPublicKey &&
-          <>
-            <div className='justify-center items-center text-center px-4 mx-auto pt-10'>
 
-              <p>Key: {key}</p>
-              <p>Expecing Wallet: {user.solanaPublicKey}</p>
-              <p>Connected Wallet: {wallet.publicKey?.toBase58()}</p>
-            </div >
 
-            {(user.solanaPublicKey == wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) && <div className='justify-center items-center text-center px-4 mx-auto pt-10'>
-              <Button
-                loading={minting}
-                onClick={() => { mintAction(wallet, user) }}
-                className='btn border-2 px-4 py-2 rounded-xl hover:bg-gray-300 hover:text-black'
-              >Mint it!</Button>
-              <button className="text-white bg-blue-500 px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-700">
-                Big Button
-              </button>
-            </div >
+        <div className="bg-gray-900 px-6 py-24 sm:py-32 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            {!wallet.connected &&
+              <button className='btn btn-outline btn-info' onClick={() => { setVisible(true) }}>Connect me</button>
+            }
+            {wallet.connected &&
+              <button className='btn btn-outline btn-info' onClick={() => { wallet.disconnect() }}>{wallet.publicKey?.toBase58().slice(0, 4) + "...." + wallet.publicKey?.toBase58().slice(-4)} Disconnect</button>
+            }
+            <h2 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">MemberMint</h2>
+            <p className="mt-6 text-lg leading-8 text-gray-300">
+              Where roles meet recognition.
+            </p>
+
+            {/* Loading Spinner */}
+            {loading &&
+              <>
+                <span className="mt-4 loading loading-ring loading-lg text-white"></span>
+              </>
             }
 
-            {(user.solanaPublicKey == wallet.publicKey?.toBase58() && user.membershipNFTPublicKey) && <div className='justify-center items-center text-center px-4 mx-auto pt-10'>
-              <Button
-                onClick={() => { alert("minted") }}
-                disabled
-                className='btn border-2 px-4 py-2 rounded-xl hover:bg-gray-300 hover:text-black'
-              >Minted</Button>
-            </div >
-            }
-          </>
-        }
+            {/* BUTTONS GO HERE */}
 
-        {!wallet.connected && <>not connected</>}
+            {!loading && (user.solanaPublicKey == wallet.publicKey?.toBase58() && !user.membershipNFTPublicKey) &&
+              <button className="btn btn-outline btn-info"
+                onClick={() => {
+                  mintAction(wallet, user)
+                }}
+              >Mint Now</button>
+            }
+
+            {!loading && (user.solanaPublicKey == wallet.publicKey?.toBase58() && user.membershipNFTPublicKey) &&
+              <button className="btn btn-outline btn-info"
+                onClick={() => {
+                  mintAction(wallet, user)
+                }}
+              >Minted</button>
+            }
+
+            {/* NO MORE BUTTONS */}
+
+
+          </div>
+        </div>
       </div>
     </div>
   </>)
