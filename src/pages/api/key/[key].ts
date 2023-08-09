@@ -36,7 +36,7 @@ export default async function handler(
     }
 
     console.log("Sending back")
-    //@ts-ignore
+    if (!user) return res.status(200).json({error: "invalid key"})
     console.log(user)
     //@ts-ignore
     res.status(200).json(user)

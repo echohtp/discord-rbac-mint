@@ -145,7 +145,7 @@ export default function KeyMintPage() {
               </>
             }
 
-            {!loading && !user && 
+            {!loading && user.error && 
             <>
               <p className="mt-6 text-lg leading-8 text-gray-300">
               Invalid Key
